@@ -1,4 +1,4 @@
-import database from "../config/database";
+import database from "../config/database.js";
 
 async function getUserByEmail(email) {
     let result = await database.collection('users').findOne({
