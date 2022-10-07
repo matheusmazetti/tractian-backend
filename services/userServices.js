@@ -18,4 +18,15 @@ async function insertNewUser(userData) {
     await userRepositories.insertUser(userObj);
 }
 
-export { checkUserExists, insertNewUser };
+async function loginByEmail(userData){
+    let user = await userRepositories.getUserByEmail(userData.email);
+    if(!user){
+        throw {code: 404, message: 'user not found'}
+    }
+    if(!bcrypt.compareSync(userData.password, user.password)){
+        throw {code: 401, message: 'wrong password'}
+    }
+    return user;
+}
+
+export { checkUserExists, insertNewUser, loginByEmail };
